@@ -1,0 +1,41 @@
+\vspace{-2mm}\section{Formalizing Reasoning Hallucination}\vspace{-1mm}
+\label{sec:definition}
+
+To establish a rigorous foundation for our analysis, we introduce a formal definition of reasoning hallucination. Our goal is to move beyond ambiguous descriptions and provide a precise criterion that captures the various process-based flaws discussed in this survey.
+
+\subsection{Preliminary}
+
+Let $Q$ represent the input query or problem posed to the model. The model's complete output consists of a final answer $A$ and a reasoning process $R$. We define the reasoning process $R$ as an ordered sequence of $N$ intermediate steps:
+$$R = (r_1, r_2, \dots, r_N)$$
+
+To evaluate the quality of this reasoning process, we introduce two key predicates:
+
+\textbf{Step Validity ($V$):} Let $V(r_i | r_{<i}, Q) \in \{\text{True, False}\}$ be a predicate that evaluates whether the reasoning step $r_i$ is a valid (e.g., logically sound) deduction based on the query $Q$ and all preceding steps $r_{<i} = (r_1, \dots, r_{i-1})$. A value of $\text{False}$ indicates a flaw in the step itself, such as a logical fallacy.
+
+\textbf{Process-Answer Consistency ($C$):} Let $C(R, A) \in \{\text{True, False}\}$ be a predicate that evaluates whether the entire reasoning process $R$ logically entails or supports the model's final answer $A$. A value of $\text{False}$ indicates a mismatch between the reasoning and the conclusion, corresponding to Think-Answer Mismatch category.
+
+\subsection{Definition of Valid Reasoning}
+
+Using these predicates, we first define an ideal or \textbf{Valid Reasoning} process. A process is considered valid if and only if every step is valid and the process as a whole is consistent with the final answer.
+
+\newtheorem{definition}{Definition}
+\begin{definition}[Valid Reasoning]
+    \label{def:valid_reasoning}
+    A reasoning process $R$ for a given query $Q$ and answer $A$ is defined as \textbf{Valid}, denoted $Valid(R, Q, A)$, if and only if:
+    $$
+        Valid(R, Q, A) \equiv \left( \forall i \in [1, N], V(r_i | r_{<i}, Q) = \text{True} \right) \land \left( C(R, A) = \text{True} \right)
+    $$
+\end{definition}
+
+\subsection{Definition of Reasoning Hallucination}
+
+Our central thesis is that reasoning hallucination encompasses not only \textit{invalidity} but also \textit{pathological sub-optimality}. A process that is correct but unnecessarily complex or redundant (i.e., Overthinking) is also a form of process-based flaw. We therefore present a unified definition of Reasoning Hallucination ($H_R$) that captures both conditions.
+
+\begin{definition}[Reasoning Hallucination]
+    \label{def:reasoning_hallucination}
+    A reasoning process $R$ is classified as a \textbf{Reasoning Hallucination} ($H_R$) if it is either \textbf{not Valid}, or if it \textbf{is Valid but contains redundant steps} (i.e., is sub-optimal). Formally:
+    $$
+        H_R(R, Q, A) \equiv \underbrace{\neg Valid(R, Q, A)}_{\text{Invalidity Flaw}} \quad \lor \quad \underbrace{\left( Valid(R, Q, A) \land \exists R' \subset R \text{ s.t. } Valid(R', Q, A) \right)}_{\text{Sub-optimality Flaw}}
+    $$
+    where $R' \subset R$ denotes that $R'$ is a strict subsequence of $R$, formed by removing one or more steps from $R$.
+\end{definition}

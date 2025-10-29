@@ -1,0 +1,32 @@
+\vspace{-2mm}\section{Types of Reasoning Hallucination}\vspace{-1mm}
+\label{sec:taxonomy}
+
+Based on the formalization in Definition~\ref{def:reasoning_hallucination}, we systematically categorize reasoning hallucination ($H_R$) into two primary classes.
+
+\subsection{Invalidity Flaws}
+\label{sec:invalidity_flaws}
+
+Invalidity Flaws are violations of Valid Reasoning (Definition~\ref{def:valid_reasoning}).
+These flaws manifest when at least one reasoning step $r_i$ is logically invalid (i.e., $V(r_i | r_{<i}, Q) = \text{False}$), or when the complete reasoning process $R$ fails to logically entail the final answer $A$ (i.e., $C(R, A) = \text{False}$).
+
+This category encompasses several distinct failure modes.
+\textbf{Logical Fallacies} represent the most direct form of invalidity ($V(r_i) = \text{False}$), where models produce steps that are not logically sound.
+This includes causal misattributions, such as the ``illusion of causality'' or the ``post hoc fallacy''~\cite{joshi2024llms}, and a ``Fake Reasoning Bias''~\cite{wang2025towards}, where models favor superficial rhetorical structures over logical soundness.
+
+Beyond single-step failures, \textbf{Think-Answer Mismatch} corresponds to the $C(R, A) = \text{False}$ condition.
+In this phenomenon, the model's generated reasoning chain $R$ is disconnected from its final answer $A$, suggesting the CoT serves as a post-hoc rationalization rather than the true derivation process~\cite{yao2025reasoning}.
+Notably, even when a model exhibits this type of hallucination and reaches an incorrect conclusion during the reasoning process, it may still produce the correct final answer.
+This possibility poses a significant challenge to the identification of reasoning hallucination~\cite{yee2024dissociation}.
+
+A distinct type of invalidity emerges as \textbf{Flaw Repetition}, where the model becomes trapped in a loop of semantically similar but incorrect reasoning steps~\cite{yao2025reasoning}.
+
+\subsection{Sub-optimality Flaws}
+\label{sec:suboptimality_flaws}
+
+Sub-optimality Flaws represent a more insidious form of $H_R$.
+As defined in Definition~\ref{def:reasoning_hallucination}, these are processes that are technically $Valid$ but are pathological due to redundancy (i.e., $\exists R' \subset R \text{ s.t. } Valid(R', Q, A)$).
+
+The primary manifestation of this category is \textbf{Overthinking}.
+This phenomenon is characterized by the generation of verbose and tangential reasoning traces even for simple queries~\cite{cuesta2025lrms}.
+More pathologically, this behavior causes models to disregard correct solutions even when explicitly provided, leading them to pursue unnecessarily complex and often erroneous reasoning paths.
+This suggests that the model is pathologically matching the form of complex reasoning (i.e., generating long token sequences) rather than executing the function of efficient problem-solving.

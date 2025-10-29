@@ -1,0 +1,186 @@
+\documentclass[11pt,letterpaper]{mystyle}
+\usepackage{fancyhdr}
+\usepackage{float}
+
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[numbers]{natbib}
+\usepackage{adjustbox}
+\usepackage{breakurl}    
+\usepackage{hyperref}
+\usepackage[edges]{forest}
+\usepackage{subcaption}
+\usepackage{soul}
+\usepackage{multirow}
+\usepackage[utf8]{inputenc} 
+\usepackage{booktabs}       
+\usepackage{amsfonts}       
+\usepackage{nicefrac}      
+\usepackage{microtype}     
+\usepackage{xcolor}        
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{courier}
+\usepackage{bxcoloremoji}
+\usepackage{CJKutf8}
+\usepackage{tcolorbox}
+\usepackage{array}
+\usepackage{tabularx}
+
+\newcommand{\github}{\raisebox{-1.5pt}{\includegraphics[height=1.05em]{logo/github-logo.pdf}}}
+\newcommand{\cqgcomment}[1]{{\begin{CJK*}{UTF8}{gbsn}\textcolor{red}{[#1 -- \textsc{CQG}]}\end{CJK*}}}
+\fancypagestyle{headstyle}{
+    \fancyhead[L]{
+        \includegraphics[width=80pt]{logo/larg-logo.pdf}
+    }
+    \fancyhead[C]{}
+    \fancyhead[R]{}
+
+}
+
+\definecolor{hidden-red}{RGB}{205, 44, 36}
+\definecolor{hidden-blue}{RGB}{194,232,247}
+\definecolor{hidden-orange}{RGB}{243,202,120}
+\definecolor{hidden-green}{RGB}{34,139,34}
+\definecolor{hidden-pink}{RGB}{255,245,247}
+\definecolor{hidden-black}{RGB}{20,68,106}
+\definecolor{purple}{RGB}{144,153,196}
+\definecolor{yellow}{RGB}{255,228,123}
+\definecolor{hidden-yellow}{RGB}{255,248,203}
+\definecolor{tkcolor}{RGB}{224,223,255}
+\definecolor{darkblue}{rgb}{0, 0.40, 0.75}
+\newcommand{\eg}{\textit{e.g.,}}
+\hypersetup{colorlinks=true, citecolor=darkblue, linkcolor=darkblue, urlcolor=darkblue}
+
+\newtcolorbox{socialpost}{
+  colback=black!5!white,
+  colframe=black!75!black,
+  sharp corners,
+  boxrule=0.5pt,
+  fontupper=\sffamily\small, 
+  left=3mm,
+  right=3mm,
+  top=3mm,
+  bottom=3mm,
+  boxsep=1mm
+}
+
+
+\tcbset{
+  aibox/.style={
+    width=\linewidth,
+    top=8pt,
+    bottom=4pt,
+    colback=blue!6!white,
+    colframe=black,
+    colbacktitle=black,
+    enhanced,
+    center,
+    attach boxed title to top left={yshift=-0.1in,xshift=0.15in},
+    boxed title style={boxrule=0pt,colframe=white,},
+  }
+}
+
+
+
+\newtcolorbox{AIbox}[2][]{aibox,title=#2,#1}
+
+\tcbset{
+  takeawaybox/.style={
+    width=\linewidth,
+    top=8pt,
+    bottom=4pt,
+    colback=hidden-yellow,
+    colframe=black,
+    colbacktitle=black,
+    enhanced,
+    center,
+    attach boxed title to top left={yshift=-0.1in,xshift=0.15in},
+    boxed title style={boxrule=0pt,colframe=white,},
+  }
+}
+
+\newtcolorbox{TakeawayBox}[2][]{takeawaybox,title=#2,#1}
+
+\title{A Survey of Reasoning Hallucinations}
+
+\author{
+  Jiannan Guan$^{1*}$ \quad Qiguang Chen$^{1*}$ \quad Linfan Dai$^{2*}$ \quad Libo Qin$^{2, \coloremojicode{2709}}$ \quad Jingxiang Weng$^{1}$ \quad Dengyun Peng$^{1}$ \quad Jinhao Liu$^{1*}$ \quad Zheng Yan$^{1}$ \quad Bofei Liu$^{1}$ \quad Han He$^{1}$ \quad Jiaqi Wang$^{3}$ \quad Mengkang Hu$^{4}$ \vspace{-5pt}\\
+  \textbf{Zhi Chen$^{5}$ \quad Yantao Du$^{5}$ \quad Wanxiang Che$^{1, \coloremojicode{2709}}$}\vspace{-5pt}\\
+\normalfont{$^1$ LARG, Research Center for Social Computing and Interactive Robotics, Harbin Institute of Technology,\vspace{-5pt}\\
+$^2$ School of Computer Science and Engineering, Central South University,\vspace{-5pt}\\
+$^3$ The Chinese University of Hong Kong \quad
+$^4$ The University of Hong Kong \quad
+$^5$ ByteDance China (Seed)\\
+}}
+
+
+\begin{document}
+
+\begin{abstract}
+  \vspace{5mm}
+  \textbf{\large Abstract:}
+  \vspace{2mm}
+
+  As the volume of peer-reviewed research surges, scholars increasingly rely on social platforms for discovery, while authors invest considerable effort in promoting their work to ensure visibility and citations. To streamline this process and reduce the reliance on human effort, we introduce Automatic Promotion (AutoPR), a novel task that transforms research papers into accurate, engaging, and timely public content. To enable rigorous evaluation, we release PRBench, a multimodal benchmark that links 512 peer-reviewed articles to high-quality promotional posts, assessing systems along three axes: Fidelity (accuracy and tone), Engagement (audience targeting and appeal), and Alignment (timing and channel optimization). We also introduce PRAgent, a multi-agent framework that automates AutoPR in three stages: content extraction with multimodal preparation, collaborative synthesis for polished outputs, and platform-specific adaptation to optimize norms, tone, and tagging for maximum reach. When compared to direct LLM pipelines on PRBench, PRAgent demonstrates substantial improvements, including a 604\% increase in total watch time, a 438\% rise in likes, and at least a 2.9x boost in overall engagement. Ablation studies show that platform modeling and targeted promotion contribute the most to these gains. Our results position AutoPR as a tractable, measurable research problem and provide a roadmap for scalable, impactful automated scholarly communication.
+  \vspace{5mm}
+
+  $^{*}$ \textit{Equal Contribution}
+
+  $^{\coloremojicode{2709}}$ \textit{Corresponding Author}
+
+  \vspace{5mm}
+
+  \coloremojicode{1F4C5} \textbf{Date}: Oct. 01, 2025
+
+  \github{} \textbf{Project Website}: \href{https://yzweak.github.io/autopr.github.io}{https://yzweak.github.io/autopr.github.io}
+
+  \github{} \textbf{Code Repository}: \href{https://github.com/LightChen2333/AutoPR}{https://github.com/LightChen2333/AutoPR}
+
+  \coloremojicode{1F4DA}  \textbf{Demo}: \href{https://huggingface.co/spaces/yzweak/AutoPR}{https://huggingface.co/spaces/yzweak/AutoPR}
+
+  \coloremojicode{1F917}  \textbf{Benchmark}: \href{https://huggingface.co/datasets/yzweak/PRBench}{https://huggingface.co/datasets/yzweak/PRBench}
+
+
+
+
+  \coloremojicode{1F4E7} \textbf{Contact}: \href{mailto:qgchen@ir.hit.edu.cn}{qgchen@ir.hit.edu.cn}, \href{mailto:zyan@ir.hit.edu.cn}{zyan@ir.hit.edu.cn},\href{mailto:car@ir.hit.edu.cn}{car@ir.hit.edu.cn}, \href{mailto:lbqin@csu.edu.cn}{lbqin@csu.edu.cn}
+
+
+\end{abstract}
+\maketitle
+
+\vspace{3mm}
+\pagestyle{headstyle}
+\thispagestyle{empty}
+
+\begin{CJK}{UTF8}{gbsn}
+
+\input{sections/introduction}
+
+\input{sections/definition}
+
+\input{sections/type}
+
+\input{sections/characteristic}
+
+\input{sections/evaluation}
+
+\input{sections/method}
+
+\input{sections/future}
+
+\input{sections/related_work}
+
+\input{sections/conclusion}
+
+\end{CJK}
+
+\bibliographystyle{./refstyle}
+\bibliography{ref}
+\appendix
+\newpage
+\input{sections/appendix.tex}
+\end{document}

@@ -1,0 +1,57 @@
+\vspace{-2mm}\section{Introduction}\vspace{-1mm}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/framework.pdf}
+    \caption{Overview of our study: Automatic Promotion (AutoPR) task, its benchmark PRBench, and the associated method PRAgent. The details of citation trend analysis are shown in Appendix~\ref{append:citation}.
+    }
+    \label{fig:framework}
+\end{figure}
+
+The rapid development of Large Language Models (LLMs) has pushed the capabilities of artificial intelligence to new heights~\cite{achiam2023gpt,yang2025qwen3,qin2024large}.
+In particular, LLMs that enhance complex task-solving abilities through specific training strategies, such as Chain-of-Thought (CoT), are at the forefront of this progress~\cite{wei2022chain,guo2025deepseek,jaech2024openai}.
+We refer to these as \textbf{Large Reasoning Models (LRMs)}~\cite{chen2025towards}.
+However, this advancement is accompanied by a growing and significant challenge: Hallucination.
+
+Initially, research on hallucination was primarily concentrated on the factual level~\cite{huang2025survey,park2025steer}.
+For instance, early surveys classified hallucinations into two main categories:
+Factuality Hallucination, where generated content conflicts with verifiable real-world knowledge, and Faithfulness Hallucination, where the output contradicts the provided source text or context.
+Although significant, these errors are mainly concerned with the correctness of the output's result.
+
+However, the nature of hallucination has fundamentally shifted as LRMs increasingly perform multi-step reasoning, particularly driven by techniques like CoT.
+The CoT strategy was introduced to improve complex problem-solving by guiding models to generate explicit intermediate steps.
+While this approach appears to offer a path to more reliable and interpretable AI, deeper investigation reveals a concerning reality.
+The explicit reasoning paths, while offering transparency, simultaneously introduce new and subtle vulnerabilities.
+The core of the hallucination problem has shifted from \textit{what the model knows} to \textit{how the model thinks}.
+This has led to the emergence of a more complex and concealed category: \textbf{Reasoning Hallucination}.
+
+In this paradigm, a model may produce the correct final answer, yet its reasoning process is flawed with logical fallacies, fabrications, or disconnected steps.
+Conversely, a model might follow a seemingly coherent reasoning chain only to arrive at an incorrect conclusion~\cite{joshi2024llms,yao2025reasoning}.
+Specifically, the reasoning process of these models can be unreliable.
+This unreliability manifests not only as logical fallacies but also as a pathological disregard for simple solutions, where models fall into unnecessary complexity and overthinking~\cite{peng2025revisiting,fan2025missing}.
+This behavior is perhaps another byproduct of their reasoning-style text pattern matching mechanism.
+This transition from focusing on factual errors to reasoning process flaws represents the current research frontier~\cite{jiao2025trustworthy}.
+It also highlights the profound paradoxes underlying advanced reasoning capabilities.
+
+Ironically, while CoT can reduce the frequency of factual hallucinations in some cases, it may also obscure key cues for their detection.
+When the model generates a long and complex reasoning chain, its reported confidence in the final output increases significantly, and the extended reasoning process itself appears more persuasive.
+This makes hallucinations harder to detect, both for automated evaluation toolkits and human reviewers~\cite{cheng2025chain}.
+This creates a fundamental tension between capability and evaluability, which we term the \textbf{Reasoning Evaluability Paradox}.
+This paradox is that the very tools we use to enhance model reasoning (like CoT) may simultaneously weaken our ability to assess their reliability.
+
+The main contributions of this work are as follows:
+
+\begin{itemize}[leftmargin=16pt, itemsep=0pt, topsep=0pt]
+    \item \textbf{A Systematic Taxonomy of Reasoning Hallucination:}
+    We propose a systematic taxonomy for \textbf{Reasoning Hallucination}.
+    This framework moves beyond traditional, result-based definitions of hallucination to focus on process-based flaws that occur during complex reasoning.
+    We subdivide reasoning hallucination into four main categories (\textbf{Logical Fallacies, Flaw Repetition, Think-Answer Mismatch, and Overthinking}) to facilitate detailed analysis.
+
+    \item \textbf{A Comprehensive Review of the Reasoning Paradigm:}
+    This paper provides a comprehensive review of the causes, detection methods, and mitigation strategies for reasoning hallucination.
+    We place special emphasis on analyzing how techniques like CoT fundamentally alter the form of hallucination, shifting it from incorrect answers to flawed reasoning processes.
+
+    \item \textbf{Critical Analysis and Future Roadmap:}
+    We conduct a critical analysis of the core challenges in current research, particularly the \textbf{Reasoning Evaluability Paradox} as defined in this paper.
+    Finally, we propose future research directions for building more robust, reliable, and trustworthy large reasoning models.
+\end{itemize}

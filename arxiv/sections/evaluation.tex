@@ -1,0 +1,15 @@
+\vspace{-2mm}\section{Evaluationof Reasoning Hallucination}\vspace{-1mm}
+\label{sec:evaluation}
+
+Addressing the Reasoning Evaluability Paradox requires specialized evaluation tools that can scrutinize the reasoning process, which in turn necessitates a deep understanding of the mechanisms that generate these process-based flaws.
+
+\subsection{Automated Detection Techniques}
+
+Automated detection aims to identify flaws dynamically.
+This includes training watchdog classifiers, which have been shown to detect reasoning-induced hallucinations with high accuracy~\cite{jiang2024large}.
+Another avenue involves probing the model's internal confidence signals~\cite{chen2024teaching}.
+However, this approach is compromised by the overconfidence phenomenon, where models exhibit high confidence for flawed reasoning~\cite{yao2025reasoning}.  % TODO cite gjn reasoning overconfidence
+
+\subsection{Evaluation Benchmarks}
+
+\subsection{Origins and Mechanisms of Reasoning Hallucination}
